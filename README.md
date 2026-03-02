@@ -87,16 +87,35 @@ pnpm --filter @mentor-esgi/api test:cov
 
 ## Variables d'environnement
 
-Copier le fichier d'exemple dans chaque app :
+```bash
+cp .env.example .env
+```
+
+## Docker
+
+### Dev — PostgreSQL uniquement
 
 ```bash
-cp apps/api/.env.example apps/api/.env
-cp apps/web/.env.example apps/web/.env.local
+# Démarrer la base de données
+docker compose up -d
+
+# Arrêter
+docker compose down
+
+# Supprimer les données
+docker compose down -v
+```
+
+### Prod — Tout dockerisé
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
 ```
 
 ## Ports par défaut
 
-| App | Port |
-|-----|------|
+| Service | Port |
+|---------|------|
 | API (NestJS) | 8080 |
 | Web (Next.js) | 3000 |
+| PostgreSQL | 5432 |
