@@ -10,6 +10,9 @@ export default tseslint.config(
       '**/.turbo/**',
     ],
   },
+  {
+    files: ['apps/**/*.ts', 'packages/**/*.ts'],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
 )
