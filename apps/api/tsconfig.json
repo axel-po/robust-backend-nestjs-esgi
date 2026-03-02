@@ -20,6 +20,16 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "plugins": [
+      { "transform": "typia/lib/transform" },
+      {
+        "transform": "@nestia/core/lib/transform",
+        "validate": "validate",
+        "stringify": "assert"
+      },
+      { "transform": "@nestia/sdk/lib/transform" }
+    ]
   }
 }
