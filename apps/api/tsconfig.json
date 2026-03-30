@@ -31,5 +31,6 @@
       },
       { "transform": "@nestia/sdk/lib/transform" }
     ]
-  }
+  },
+  "exclude": ["node_modules", "dist", "scripts"]
 }

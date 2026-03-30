@@ -5,7 +5,8 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
-    "type-check": "turbo type-check"
+    "type-check": "turbo type-check",
+    "swagger:generate": "pnpm --filter @mentor-esgi/api swagger:generate"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
