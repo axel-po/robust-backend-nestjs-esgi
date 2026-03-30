@@ -8,7 +8,6 @@
   "scripts": {
     "prepare": "ts-patch install && typia patch",
     "build": "nest build",
-    "sdk": "nestia sdk",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "node --env-file=../../.env ./node_modules/@nestjs/cli/bin/nest.js start --watch",
     "start": "nest start",
@@ -24,17 +23,16 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx --env-file=../../.env src/database/seed.ts"
   },
   "dependencies": {
-    "@mentor-esgi/types": "workspace:*",
     "@nestia/core": "^10.0.2",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/platform-express": "^11.0.1",
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8",
     "reflect-metadata": "^0.2.2",
@@ -54,6 +52,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
+    "dotenv": "^17.3.1",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
@@ -68,6 +67,7 @@
     "ts-node": "^10.9.2",
     "ts-patch": "^3.3.0",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },

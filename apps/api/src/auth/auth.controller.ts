@@ -1,11 +1,6 @@
 import { Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
 import { TypedBody } from '@nestia/core';
-import type {
-  RegisterDto,
-  LoginDto,
-  AuthTokensDto,
-  RefreshDto,
-} from '@mentor-esgi/types';
+import type { RegisterDto, LoginDto, AuthTokensDto, RefreshDto } from '../dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')

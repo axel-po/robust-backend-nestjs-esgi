@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import type { RegisterDto, LoginDto, AuthTokensDto } from '@mentor-esgi/types';
+import type { RegisterDto, LoginDto, AuthTokensDto } from '../dto';
 import { AuthRepository } from './auth.repository';
 
 @Injectable()
