@@ -25,7 +25,8 @@
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx --env-file=../../.env src/database/seed.ts",
-    "swagger:generate": "tsx scripts/swagger.ts"
+    "swagger:generate": "tsx scripts/swagger.ts",
+    "sdk:generate": "npx @nestia/sdk sdk"
   },
   "dependencies": {
     "@nestia/core": "^10.0.2",

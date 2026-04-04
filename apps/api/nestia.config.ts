@@ -2,6 +2,7 @@ import type { INestiaConfig } from '@nestia/sdk';
 
 const config: INestiaConfig = {
   input: ['src/**/*.controller.ts'],
+  output: '../../packages/sdk/src',
   swagger: {
     output: 'swagger.json',
     info: {

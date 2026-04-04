@@ -21,5 +21,8 @@ build
 npm-debug.log*
 pnpm-debug.log*
 
+# Nestia SDK (auto-generated)
+packages/sdk/src
+
 # OS
 .DS_Store
