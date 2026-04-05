@@ -3,6 +3,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { redisStore } from 'cache-manager-redis-yet';
+import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
@@ -24,7 +25,7 @@ import { MessagesModule } from './messages/messages.module';
             port: Number(process.env.REDIS_PORT ?? 6379),
           },
         }),
-        ttl: 10000, // 10 secondes 
+        ttl: 10000, // 10 secondes
       }),
     }),
     ThrottlerModule.forRoot({
@@ -45,6 +46,14 @@ import { MessagesModule } from './messages/messages.module';
           limit: 100,
         },
       ],
+    }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: { colorize: true, singleLine: true },
+        },
+      },
     }),
     DatabaseModule,
     AuthModule,
