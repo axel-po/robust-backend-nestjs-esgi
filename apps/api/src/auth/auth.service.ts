@@ -28,7 +28,7 @@ export class AuthService {
       role: dto.role,
     });
 
-    return this.generateTokens(user.id, user.email);
+    return this.generateTokens(user.id, user.email, user.role);
   }
 
   async login(dto: LoginDto): Promise<AuthTokensDto> {
@@ -38,7 +38,7 @@ export class AuthService {
     const valid = await bcrypt.compare(dto.password, user.passwordHash);
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
-    return this.generateTokens(user.id, user.email);
+    return this.generateTokens(user.id, user.email, user.role);
   }
 
   async refresh(refreshToken: string): Promise<AuthTokensDto> {
@@ -51,14 +51,18 @@ export class AuthService {
       const user = await this.authRepository.findById(payload.sub);
       if (!user) throw new UnauthorizedException();
 
-      return this.generateTokens(user.id, user.email);
+      return this.generateTokens(user.id, user.email, user.role);
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }
 
-  private generateTokens(userId: string, email: string): AuthTokensDto {
-    const payload = { sub: userId, email };
+  private generateTokens(
+    userId: string,
+    email: string,
+    role: string,
+  ): AuthTokensDto {
+    const payload = { sub: userId, email, role };
 
     return {
       accessToken: this.jwtService.sign(payload, {

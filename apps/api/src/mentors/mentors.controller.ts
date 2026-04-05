@@ -14,8 +14,11 @@ import type {
   UpdateMentorProfileDto,
 } from '../dto';
 import { JwtGuard } from '../common/guards/jwt.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { JwtPayload } from '../common/decorators/current-user.decorator';
+import { Roles } from '../common/decorators/roles.decorator';
+import { UserRole } from '../dto';
 import { MentorsService } from './mentors.service';
 
 @Controller('mentors')
@@ -38,8 +41,10 @@ export class MentorsController {
     return this.mentorsService.getById(id);
   }
 
+  // Seul un MENTOR peut créer son profil
   @Post('profile')
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(UserRole.MENTOR)
   createProfile(
     @CurrentUser() user: JwtPayload,
     @TypedBody() body: CreateMentorProfileDto,
@@ -47,8 +52,10 @@ export class MentorsController {
     return this.mentorsService.createProfile(user.sub, body);
   }
 
+  // Seul un MENTOR peut modifier son profil
   @Patch('profile')
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(UserRole.MENTOR)
   updateProfile(
     @CurrentUser() user: JwtPayload,
     @TypedBody() body: UpdateMentorProfileDto,

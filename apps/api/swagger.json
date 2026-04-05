@@ -193,106 +193,6 @@
         "x-samchon-controller": "SessionsController"
       }
     },
-    "/requests": {
-      "get": {
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MentorshipRequest"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-samchon-accessor": [
-          "requests",
-          "getAll"
-        ],
-        "x-samchon-controller": "RequestsController"
-      },
-      "post": {
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MentorshipRequest"
-                }
-              }
-            }
-          }
-        },
-        "x-samchon-accessor": [
-          "requests",
-          "create"
-        ],
-        "x-samchon-controller": "RequestsController"
-      }
-    },
-    "/requests/{id}/status": {
-      "patch": {
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequestStatusDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MentorshipRequest"
-                }
-              }
-            }
-          }
-        },
-        "x-samchon-accessor": [
-          "requests",
-          "status",
-          "updateStatus"
-        ],
-        "x-samchon-controller": "RequestsController"
-      }
-    },
     "/sessions/{sessionId}/messages": {
       "get": {
         "tags": [],
@@ -492,6 +392,106 @@
           "updateProfile"
         ],
         "x-samchon-controller": "MentorsController"
+      }
+    },
+    "/requests": {
+      "get": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MentorshipRequest"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-samchon-accessor": [
+          "requests",
+          "getAll"
+        ],
+        "x-samchon-controller": "RequestsController"
+      },
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MentorshipRequest"
+                }
+              }
+            }
+          }
+        },
+        "x-samchon-accessor": [
+          "requests",
+          "create"
+        ],
+        "x-samchon-controller": "RequestsController"
+      }
+    },
+    "/requests/{id}/status": {
+      "patch": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequestStatusDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MentorshipRequest"
+                }
+              }
+            }
+          }
+        },
+        "x-samchon-accessor": [
+          "requests",
+          "status",
+          "updateStatus"
+        ],
+        "x-samchon-controller": "RequestsController"
       }
     },
     "/auth/register": {
@@ -709,90 +709,6 @@
           "status"
         ]
       },
-      "MentorshipRequest": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "mentorId": {
-            "type": "string"
-          },
-          "menteeId": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "status": {
-            "oneOf": [
-              {
-                "const": "PENDING"
-              },
-              {
-                "const": "ACCEPTED"
-              },
-              {
-                "const": "REJECTED"
-              },
-              {
-                "const": "CANCELLED"
-              }
-            ]
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "mentorId",
-          "menteeId",
-          "message",
-          "status",
-          "createdAt"
-        ]
-      },
-      "CreateRequestDto": {
-        "type": "object",
-        "properties": {
-          "mentorId": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "mentorId",
-          "message"
-        ]
-      },
-      "UpdateRequestStatusDto": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "oneOf": [
-              {
-                "const": "PENDING"
-              },
-              {
-                "const": "ACCEPTED"
-              },
-              {
-                "const": "REJECTED"
-              },
-              {
-                "const": "CANCELLED"
-              }
-            ]
-          }
-        },
-        "required": [
-          "status"
-        ]
-      },
       "Message": {
         "type": "object",
         "properties": {
@@ -906,6 +822,90 @@
           }
         },
         "required": []
+      },
+      "MentorshipRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "mentorId": {
+            "type": "string"
+          },
+          "menteeId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "oneOf": [
+              {
+                "const": "PENDING"
+              },
+              {
+                "const": "ACCEPTED"
+              },
+              {
+                "const": "REJECTED"
+              },
+              {
+                "const": "CANCELLED"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "mentorId",
+          "menteeId",
+          "message",
+          "status",
+          "createdAt"
+        ]
+      },
+      "CreateRequestDto": {
+        "type": "object",
+        "properties": {
+          "mentorId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mentorId",
+          "message"
+        ]
+      },
+      "UpdateRequestStatusDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "oneOf": [
+              {
+                "const": "PENDING"
+              },
+              {
+                "const": "ACCEPTED"
+              },
+              {
+                "const": "REJECTED"
+              },
+              {
+                "const": "CANCELLED"
+              }
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
       },
       "AuthTokensDto": {
         "type": "object",
