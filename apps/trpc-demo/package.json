@@ -1,0 +1,19 @@
+{
+  "name": "@mentor-esgi/trpc-demo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "tsx --env-file=../../.env src/server.ts"
+  },
+  "dependencies": {
+    "@trpc/server": "^11.1.0",
+    "express": "^5.1.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.7",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.3"
+  }
+}
