@@ -5,6 +5,7 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "dependencies": {
-    "@nestia/fetcher": "^10.0.2"
+    "@nestia/fetcher": "^10.0.2",
+    "typia": "^11.0.3"
   }
 }

@@ -1,6 +1,7 @@
 import { initTRPC } from "@trpc/server";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import express from "express";
+import cors from "cors";
 import { z } from "zod";
 
 // Init
@@ -51,6 +52,7 @@ export type AppRouter = typeof appRouter;
 // Serveur Express + tRPC
 const app = express();
 
+app.use(cors({ origin: "*" }));
 app.use("/trpc", createExpressMiddleware({ router: appRouter }));
 
 app.listen(3001, () => {

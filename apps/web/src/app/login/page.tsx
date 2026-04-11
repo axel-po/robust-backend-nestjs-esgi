@@ -1,86 +1,105 @@
-import Link from 'next/link';
-import { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-   title: 'Login - Havenx',
-};
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import api from "@mentor-esgi/sdk";
+import { connection } from "@/lib/api";
 
 export default function LoginPage() {
-   return (
-      <div className="min-h-screen flex items-center justify-center p-4 gradient-hero">
-         <div className="w-full max-w-md bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-white/50 dark:border-gray-800 shadow-soft backdrop-blur-sm relative z-10">
-            <div className="flex items-center justify-center gap-2 mb-8 text-primary dark:text-white">
-               <span className="material-symbols-outlined text-4xl">maps_home_work</span>
-               <span className="text-3xl font-bold tracking-tight">Havenx</span>
-            </div>
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-            <h1 className="text-2xl font-bold mb-2 text-center text-gray-900 dark:text-white">Welcome back</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-8 text-center">
-               Enter your credentials to access your account.
-            </p>
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-            <form className="space-y-5">
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" htmlFor="email">
-                     Email
-                  </label>
-                  <div className="relative group">
-                     <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-primary dark:group-focus-within:text-white transition-colors">
-                        <span className="material-symbols-outlined text-[20px]">mail</span>
-                     </span>
-                     <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-white focus:border-transparent outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-sm backdrop-blur-sm"
-                        placeholder="you@example.com"
-                     />
-                  </div>
-               </div>
+    const form = new FormData(e.currentTarget);
 
-               <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="password">
-                        Password
-                     </label>
-                     <Link href="#" className="text-xs font-semibold text-primary dark:text-gray-300 hover:text-accent-orange dark:hover:text-accent-orange transition-colors">
-                        Forgot password?
-                     </Link>
-                  </div>
-                  <div className="relative group">
-                     <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-primary dark:group-focus-within:text-white transition-colors">
-                        <span className="material-symbols-outlined text-[20px]">lock</span>
-                     </span>
-                     <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required
-                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-white focus:border-transparent outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500 shadow-sm backdrop-blur-sm"
-                        placeholder="••••••••"
-                     />
-                  </div>
-               </div>
+    try {
+      const tokens = await api.functional.auth.login(connection, {
+        email: form.get("email") as string,
+        password: form.get("password") as string,
+      });
 
-               <div className="pt-2">
-                  <button
-                     type="submit"
-                     className="w-full flex justify-center items-center gap-2 px-6 py-4 rounded-2xl bg-primary text-white text-sm font-semibold shadow-md hover:bg-opacity-90 hover:-translate-y-0.5 transition-all"
-                  >
-                     Sign In
-                     <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                  </button>
-               </div>
-            </form>
+      localStorage.setItem("accessToken", tokens.accessToken);
+      localStorage.setItem("refreshToken", tokens.refreshToken);
+      router.push("/dashboard");
+    } catch {
+      setError("Email ou mot de passe incorrect");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-            <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-               Don't have an account?{' '}
-               <Link href="/register" className="font-semibold text-primary dark:text-white hover:text-accent-orange dark:hover:text-accent-orange transition-colors">
-                  Sign up now
-               </Link>
-            </div>
-         </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 gradient-hero">
+      <div className="w-full max-w-md bg-card rounded-3xl p-8 border border-gray-200 shadow-soft">
+        <div className="flex items-center justify-center gap-2 mb-8 text-primary">
+          <span className="material-symbols-outlined text-4xl">school</span>
+          <span className="text-3xl font-bold tracking-tight">Mentor ESGI</span>
+        </div>
+
+        <h1 className="text-2xl font-bold mb-2 text-center text-gray-900">
+          Connexion
+        </h1>
+        <p className="text-sm text-gray-500 mb-8 text-center">
+          Consomme l&apos;API NestJS via le SDK Nestia
+        </p>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-xl bg-red-50 text-red-600 text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              className="w-full px-4 py-3.5 rounded-2xl border border-gray-200 bg-white text-gray-900 outline-none focus:ring-2 focus:ring-primary"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5" htmlFor="password">
+              Mot de passe
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              className="w-full px-4 py-3.5 rounded-2xl border border-gray-200 bg-white text-gray-900 outline-none focus:ring-2 focus:ring-primary"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full px-6 py-4 rounded-2xl bg-primary text-white text-sm font-semibold hover:bg-opacity-90 transition-all disabled:opacity-50"
+          >
+            {loading ? "Connexion..." : "Se connecter"}
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Pas de compte ?{" "}
+          <Link href="/register" className="font-semibold text-primary">
+            S&apos;inscrire
+          </Link>
+        </div>
       </div>
-   );
+    </div>
+  );
 }

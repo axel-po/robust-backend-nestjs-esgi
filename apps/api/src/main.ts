@@ -11,6 +11,7 @@ async function bootstrap() {
     bufferLogs: true,
   });
   app.useLogger(app.get(Logger));
+  app.enableCors({ origin: '*' });
 
   const swaggerPath = join(process.cwd(), 'swagger.json');
   if (existsSync(swaggerPath)) {

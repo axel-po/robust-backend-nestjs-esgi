@@ -2,10 +2,8 @@
 
 @theme {
   --color-primary: #111827;
-  --color-background-light: #F9FAFB;
-  --color-background-dark: #0B1120;
-  --color-card-light: #FFFFFF;
-  --color-card-dark: #1F2937;
+  --color-background: #F9FAFB;
+  --color-card: #FFFFFF;
   --color-accent-orange: #F97316;
 
   --font-display: var(--font-jakarta), sans-serif;
@@ -21,17 +19,4 @@
 
 .gradient-hero {
   background: linear-gradient(105deg, #E0F2FE 0%, #E0E7FF 50%, #FFEDD5 100%);
-}
-
-.dark .gradient-hero {
-  background: linear-gradient(105deg, #1e3a8a 0%, #312e81 50%, #7c2d12 100%);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
