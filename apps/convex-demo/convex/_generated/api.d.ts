@@ -8,7 +8,10 @@
  * @module
  */
 
-import type * as notifications from "../notifications.js";
+import type * as chatMembers from "../chatMembers.js";
+import type * as chatMessages from "../chatMessages.js";
+import type * as chatRooms from "../chatRooms.js";
+import type * as typing from "../typing.js";
 
 import type {
   ApiFromModules,
@@ -17,7 +20,10 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  notifications: typeof notifications;
+  chatMembers: typeof chatMembers;
+  chatMessages: typeof chatMessages;
+  chatRooms: typeof chatRooms;
+  typing: typeof typing;
 }>;
 
 /**

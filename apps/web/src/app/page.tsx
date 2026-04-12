@@ -45,11 +45,11 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/notifications"
+            href="/chat"
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-gray-200 text-gray-900 text-sm font-semibold hover:bg-gray-50 transition-all"
           >
-            Notifications (Convex)
-            <span className="material-symbols-outlined">notifications</span>
+            Chat temps réel (Convex)
+            <span className="material-symbols-outlined">chat</span>
           </Link>
         </div>
       </div>
