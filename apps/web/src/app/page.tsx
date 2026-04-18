@@ -17,7 +17,6 @@ export default function Home() {
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-primary text-white text-sm font-semibold hover:bg-opacity-90 transition-all"
           >
             Connexion (NestJS SDK)
-            <span className="material-symbols-outlined">login</span>
           </Link>
 
           <Link
@@ -25,7 +24,6 @@ export default function Home() {
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-primary text-white text-sm font-semibold hover:bg-opacity-90 transition-all"
           >
             Inscription (NestJS SDK)
-            <span className="material-symbols-outlined">person_add</span>
           </Link>
 
           <Link
@@ -33,7 +31,6 @@ export default function Home() {
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-gray-200 text-gray-900 text-sm font-semibold hover:bg-gray-50 transition-all"
           >
             Liste des mentors (NestJS SDK)
-            <span className="material-symbols-outlined">group</span>
           </Link>
 
           <Link
@@ -41,7 +38,6 @@ export default function Home() {
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-gray-200 text-gray-900 text-sm font-semibold hover:bg-gray-50 transition-all"
           >
             Feedback mentors (tRPC)
-            <span className="material-symbols-outlined">reviews</span>
           </Link>
 
           <Link
@@ -49,7 +45,6 @@ export default function Home() {
             className="w-full flex items-center justify-between px-6 py-4 rounded-2xl border border-gray-200 text-gray-900 text-sm font-semibold hover:bg-gray-50 transition-all"
           >
             Chat temps réel (Convex)
-            <span className="material-symbols-outlined">chat</span>
           </Link>
         </div>
       </div>
