@@ -10,6 +10,10 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { JwtPayload } from '../common/decorators/current-user.decorator';
 import { RequestsService } from './requests.service';
 
+/**
+ * @security bearer
+ * @tag Requests
+ */
 @Controller('requests')
 @UseGuards(JwtGuard)
 export class RequestsController {

@@ -85,6 +85,23 @@ pnpm --filter @mentor-esgi/api test:e2e
 pnpm --filter @mentor-esgi/api test:cov
 ```
 
+## Génération Nestia (Swagger & SDK)
+
+```bash
+# Générer la documentation Swagger (swagger.json)
+pnpm --filter @mentor-esgi/api swagger:generate
+
+# Générer le SDK TypeScript (consommé par apps/web)
+pnpm --filter @mentor-esgi/api sdk:generate
+
+# Générer les deux à la fois
+pnpm --filter @mentor-esgi/api generate
+```
+
+Une fois le `swagger.json` généré et l'API lancée, la documentation Swagger UI est accessible sur :
+
+👉 [http://localhost:8080/docs](http://localhost:8080/docs)
+
 ## Variables d'environnement
 
 ```bash

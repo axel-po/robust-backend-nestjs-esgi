@@ -18,7 +18,13 @@ async function bootstrap() {
     const swaggerDocument = JSON.parse(
       readFileSync(swaggerPath, 'utf-8'),
     ) as swaggerUi.JsonObject;
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    app.use(
+      '/docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocument, {
+        swaggerOptions: { persistAuthorization: true },
+      }),
+    );
   }
 
   await app.listen(process.env.PORT ?? 8080);

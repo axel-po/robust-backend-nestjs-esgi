@@ -6,6 +6,10 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { JwtPayload } from '../common/decorators/current-user.decorator';
 import { UsersService } from './users.service';
 
+/**
+ * @security bearer
+ * @tag Users
+ */
 @Controller('users')
 @UseGuards(JwtGuard)
 export class UsersController {

@@ -21,6 +21,9 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { UserRole } from '../dto';
 import { MentorsService } from './mentors.service';
 
+/**
+ * @tag Mentors
+ */
 @Controller('mentors')
 export class MentorsController {
   constructor(private readonly mentorsService: MentorsService) {}
@@ -41,7 +44,10 @@ export class MentorsController {
     return this.mentorsService.getById(id);
   }
 
-  // Seul un MENTOR peut créer son profil
+  /**
+   * Seul un MENTOR peut créer son profil
+   * @security bearer
+   */
   @Post('profile')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.MENTOR)
@@ -52,7 +58,10 @@ export class MentorsController {
     return this.mentorsService.createProfile(user.sub, body);
   }
 
-  // Seul un MENTOR peut modifier son profil
+  /**
+   * Seul un MENTOR peut modifier son profil
+   * @security bearer
+   */
   @Patch('profile')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.MENTOR)
