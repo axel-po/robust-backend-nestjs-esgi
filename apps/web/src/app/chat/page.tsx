@@ -6,6 +6,62 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex-demo/convex/_generated/api";
 import type { Id } from "../../../../convex-demo/convex/_generated/dataModel";
 
+// ── Icons (inline SVG) ─────────────────────────────────────
+const iconProps = {
+  width: 16,
+  height: 16,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+const PlusIcon = ({ size = 18 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size}>
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
+const LogOutIcon = ({ size = 16 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size}>
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+);
+
+const ArrowLeftIcon = ({ size = 14 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size}>
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </svg>
+);
+
+const UsersIcon = ({ size = 16 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size}>
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const SendIcon = ({ size = 18 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size}>
+    <line x1="22" y1="2" x2="11" y2="13" />
+    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+  </svg>
+);
+
+const MessageCircleIcon = ({ size = 48 }: { size?: number }) => (
+  <svg {...iconProps} width={size} height={size} strokeWidth={1.5}>
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+  </svg>
+);
+
 // ── User identity (simplifié, pas d'auth Convex) ───────────
 function getStoredUser(): { id: string; name: string } | null {
   if (typeof window === "undefined") return null;
@@ -175,26 +231,28 @@ function RoomSidebar({
       {/* Header */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-bold text-gray-900">Rooms</h2>
+          <h2 className="text-sm font-bold text-gray-900 tracking-tight">
+            Rooms
+          </h2>
           <button
             onClick={onCreateRoom}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-accent-orange text-white hover:bg-opacity-90 transition-all"
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-accent-orange text-white shadow-sm hover:shadow-md hover:bg-opacity-90 active:scale-95 transition-all"
             title="Nouvelle room"
+            aria-label="Créer une nouvelle room"
           >
-            <span className="material-symbols-outlined text-[18px]">add</span>
+            <PlusIcon size={16} />
           </button>
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          <span className="w-2 h-2 rounded-full bg-green-400" />
-          {userName}
+        <div className="flex items-center gap-2 text-xs text-gray-600">
+          <span className="w-2 h-2 rounded-full bg-green-400 shrink-0" />
+          <span className="font-medium truncate">{userName}</span>
           <button
             onClick={onLogout}
-            className="ml-auto text-gray-400 hover:text-red-500 transition-colors"
+            className="ml-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
             title="Déconnexion"
+            aria-label="Se déconnecter"
           >
-            <span className="material-symbols-outlined text-[16px]">
-              logout
-            </span>
+            <LogOutIcon size={14} />
           </button>
         </div>
       </div>
@@ -238,12 +296,10 @@ function RoomSidebar({
       <div className="p-3 border-t border-gray-200">
         <Link
           href="/"
-          className="flex items-center justify-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+          className="flex items-center justify-center gap-1.5 text-xs font-medium text-gray-500 hover:text-accent-orange transition-colors py-2 rounded-lg hover:bg-gray-50"
         >
-          <span className="material-symbols-outlined text-[14px]">
-            arrow_back
-          </span>
-          Retour à l&apos;accueil
+          <ArrowLeftIcon size={14} />
+          <span>Retour à l&apos;accueil</span>
         </Link>
       </div>
     </div>
@@ -396,9 +452,11 @@ function ChatPanel({
           </h2>
           <p className="text-xs text-gray-400">{room.description}</p>
         </div>
-        <div className="flex items-center gap-1 text-xs text-gray-400">
-          <span className="material-symbols-outlined text-[16px]">group</span>
-          {members?.length ?? 0} membre{(members?.length ?? 0) > 1 ? "s" : ""}
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full">
+          <UsersIcon size={14} />
+          <span className="font-medium">
+            {members?.length ?? 0} membre{(members?.length ?? 0) > 1 ? "s" : ""}
+          </span>
         </div>
       </div>
 
@@ -410,10 +468,10 @@ function ChatPanel({
           </p>
         )}
         {messages?.length === 0 && (
-          <div className="text-center py-12">
-            <span className="material-symbols-outlined text-4xl text-gray-200 mb-2 block">
-              chat_bubble_outline
-            </span>
+          <div className="text-center py-12 flex flex-col items-center">
+            <div className="text-gray-200 mb-3">
+              <MessageCircleIcon size={40} />
+            </div>
             <p className="text-sm text-gray-400">
               Aucun message — lancez la conversation !
             </p>
@@ -445,9 +503,10 @@ function ChatPanel({
           <button
             type="submit"
             disabled={!input.trim()}
-            className="px-4 py-2.5 rounded-xl bg-accent-orange text-white font-medium text-sm hover:bg-opacity-90 transition-all disabled:opacity-40"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-accent-orange text-white font-semibold text-sm shadow-sm hover:shadow-md hover:bg-opacity-90 active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:active:scale-100"
+            aria-label="Envoyer le message"
           >
-            <span className="material-symbols-outlined text-[20px]">send</span>
+            <SendIcon size={16} />
           </button>
         </form>
       </div>
@@ -459,10 +518,10 @@ function ChatPanel({
 function EmptyState() {
   return (
     <div className="flex-1 flex items-center justify-center">
-      <div className="text-center">
-        <span className="material-symbols-outlined text-6xl text-gray-200 mb-3 block">
-          forum
-        </span>
+      <div className="text-center flex flex-col items-center">
+        <div className="text-gray-200 mb-4">
+          <MessageCircleIcon size={64} />
+        </div>
         <h3 className="text-lg font-semibold text-gray-400 mb-1">
           Sélectionnez une room
         </h3>
